@@ -1,4 +1,4 @@
-const CACHE = "performance-app-v1";
+const CACHE = "performance-app-v2";
 const ASSETS = [
   "./",
   "./index.html",

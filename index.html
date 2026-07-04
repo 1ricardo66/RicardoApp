@@ -14,7 +14,6 @@
 
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
 <style>
   html, body { margin: 0; padding: 0; background: #0a0f1a; }
@@ -24,94 +23,213 @@
 </head>
 <body>
 <div id="root"></div>
-
-<script type="text/babel" data-presets="react">
-const { useState, useEffect, useMemo, useCallback } = React;
+<script>
+window.addEventListener("error", function() {
+  var root = document.getElementById("root");
+  if (root && !root.hasChildNodes()) {
+    root.innerHTML = "<div style='min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;background:#0a0f1a;color:#e6edf7;font-family:sans-serif;padding:24px;text-align:center;'><div style='font-size:15px;font-weight:700;'>Não foi possível carregar o app</div><div style='font-size:12.5px;color:#8291ab;max-width:320px;'>Verifique sua conexão com a internet e recarregue a página. Se o problema continuar, confira o console do navegador.</div></div>";
+  }
+});
+</script>
+<script>
+const {
+  useState,
+  useEffect,
+  useMemo,
+  useCallback
+} = React;
 
 /* ============================= ÍCONES (SVG leves, sem dependências) ============================= */
-const Icon = ({ children, size = 16, style }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor"
-       strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style}>{children}</svg>
-);
-const IconDroplet = (p) => <Icon {...p}><path d="M12 2s6 7 6 11a6 6 0 1 1-12 0c0-4 6-11 6-11Z"/></Icon>;
-const IconFootprints = (p) => <Icon {...p}><circle cx="8" cy="7" r="2.3"/><path d="M6 10.5c0 3-1.2 5-1.2 7.5a1.7 1.7 0 0 0 3.4 0c0-1.7 1-2.7 1-4.5"/><circle cx="16.5" cy="12.5" r="2.3"/><path d="M14.7 16c0 2.6-1 4-1 6.2a1.7 1.7 0 0 0 3.4 0c0-2 1.2-3.3 1.2-6"/></Icon>;
-const IconTrendingUp = (p) => <Icon {...p}><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></Icon>;
-const IconCheck = (p) => <Icon {...p}><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.3 2.3L16 10"/></Icon>;
-const IconCircle = (p) => <Icon {...p}><circle cx="12" cy="12" r="9"/></Icon>;
-const IconLock = (p) => <Icon {...p}><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></Icon>;
-const IconX = (p) => <Icon {...p}><path d="M6 6l12 12M18 6L6 18"/></Icon>;
-const IconPlus = (p) => <Icon {...p}><path d="M12 5v14M5 12h14"/></Icon>;
-const IconMinus = (p) => <Icon {...p}><path d="M5 12h14"/></Icon>;
-const IconCalendar = (p) => <Icon {...p}><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></Icon>;
-const IconWifi = (p) => <Icon {...p}><path d="M2 8.5a16 16 0 0 1 20 0"/><path d="M5.5 12.5a11 11 0 0 1 13 0"/><path d="M9 16.5a5.5 5.5 0 0 1 6 0"/><circle cx="12" cy="20" r="1" fill="currentColor" stroke="none"/></Icon>;
-const IconChevDown = (p) => <Icon {...p}><path d="M6 9l6 6 6-6"/></Icon>;
-const IconChevUp = (p) => <Icon {...p}><path d="M18 15l-6-6-6 6"/></Icon>;
-const IconReset = (p) => <Icon {...p}><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></Icon>;
+const Icon = ({
+  children,
+  size = 16,
+  style
+}) => /*#__PURE__*/React.createElement("svg", {
+  width: size,
+  height: size,
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: "2",
+  strokeLinecap: "round",
+  strokeLinejoin: "round",
+  style: style
+}, children);
+const IconDroplet = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("path", {
+  d: "M12 2s6 7 6 11a6 6 0 1 1-12 0c0-4 6-11 6-11Z"
+}));
+const IconFootprints = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("circle", {
+  cx: "8",
+  cy: "7",
+  r: "2.3"
+}), /*#__PURE__*/React.createElement("path", {
+  d: "M6 10.5c0 3-1.2 5-1.2 7.5a1.7 1.7 0 0 0 3.4 0c0-1.7 1-2.7 1-4.5"
+}), /*#__PURE__*/React.createElement("circle", {
+  cx: "16.5",
+  cy: "12.5",
+  r: "2.3"
+}), /*#__PURE__*/React.createElement("path", {
+  d: "M14.7 16c0 2.6-1 4-1 6.2a1.7 1.7 0 0 0 3.4 0c0-2 1.2-3.3 1.2-6"
+}));
+const IconTrendingUp = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("path", {
+  d: "M3 17l6-6 4 4 8-8"
+}), /*#__PURE__*/React.createElement("path", {
+  d: "M15 7h6v6"
+}));
+const IconCheck = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("circle", {
+  cx: "12",
+  cy: "12",
+  r: "9"
+}), /*#__PURE__*/React.createElement("path", {
+  d: "M8.5 12.5l2.3 2.3L16 10"
+}));
+const IconCircle = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("circle", {
+  cx: "12",
+  cy: "12",
+  r: "9"
+}));
+const IconLock = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("rect", {
+  x: "5",
+  y: "11",
+  width: "14",
+  height: "9",
+  rx: "2"
+}), /*#__PURE__*/React.createElement("path", {
+  d: "M8 11V7a4 4 0 0 1 8 0v4"
+}));
+const IconX = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("path", {
+  d: "M6 6l12 12M18 6L6 18"
+}));
+const IconPlus = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("path", {
+  d: "M12 5v14M5 12h14"
+}));
+const IconMinus = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("path", {
+  d: "M5 12h14"
+}));
+const IconCalendar = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("rect", {
+  x: "3",
+  y: "5",
+  width: "18",
+  height: "16",
+  rx: "2"
+}), /*#__PURE__*/React.createElement("path", {
+  d: "M3 10h18M8 3v4M16 3v4"
+}));
+const IconWifi = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("path", {
+  d: "M2 8.5a16 16 0 0 1 20 0"
+}), /*#__PURE__*/React.createElement("path", {
+  d: "M5.5 12.5a11 11 0 0 1 13 0"
+}), /*#__PURE__*/React.createElement("path", {
+  d: "M9 16.5a5.5 5.5 0 0 1 6 0"
+}), /*#__PURE__*/React.createElement("circle", {
+  cx: "12",
+  cy: "20",
+  r: "1",
+  fill: "currentColor",
+  stroke: "none"
+}));
+const IconChevDown = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("path", {
+  d: "M6 9l6 6 6-6"
+}));
+const IconChevUp = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("path", {
+  d: "M18 15l-6-6-6 6"
+}));
+const IconReset = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*/React.createElement("path", {
+  d: "M3 12a9 9 0 1 0 3-6.7"
+}), /*#__PURE__*/React.createElement("path", {
+  d: "M3 4v5h5"
+}));
 
 /* ============================= DADOS DO PLANO ============================= */
-const TARGETS = { kcal: 2200, protein: 170, carb: 245, fat: 60 };
-const MACRO_RATIO = { protein: 0.31, carb: 0.44, fat: 0.25 };
+const TARGETS = {
+  kcal: 2200,
+  protein: 170,
+  carb: 245,
+  fat: 60
+};
+const MACRO_RATIO = {
+  protein: 0.31,
+  carb: 0.44,
+  fat: 0.25
+};
 const WATER_TARGET_BASE = 3000;
 const WATER_TARGET_TRAINING = 3500;
 const WATER_STEP = 250;
 const RUN_WEEKLY_GOAL = 3;
 const START_WEIGHT = 85;
-
-const MEALS = [
-  { id: "breakfast", label: "Café da Manhã", time: "07:00 – 08:00", unlock: "07:00", kcal: 450, options: [
-    "3 ovos mexidos + 1 fatia de pão integral + 1 fruta + café sem açúcar",
-    "Aveia (3 col. sopa) com leite desnatado + banana + pasta de amendoim (1 col. sopa)",
-    "Tapioca (2 col. sopa de goma) com ovo e queijo branco + 1 fruta",
-    "Panqueca fit (2 ovos + banana + aveia) + café sem açúcar",
-    "Iogurte natural integral + aveia (2 col. sopa) + fruta picada",
-  ]},
-  { id: "morningSnack", label: "Lanche da Manhã", time: "10:00 – 10:30", unlock: "10:00", kcal: 150, options: [
-    "Iogurte natural desnatado + canela",
-    "1 fruta + castanhas/amêndoas (punhado pequeno)",
-    "1 fatia de queijo branco + 2 torradas integrais",
-    "1 fruta + 1 fatia de peito de peru",
-  ]},
-  { id: "lunch", label: "Almoço", time: "12:00 – 13:00", unlock: "12:00", kcal: 600, options: [
-    "Arroz (4 col. sopa) + feijão (2 col. sopa) + frango grelhado (150g) + salada + azeite",
-    "Patinho grelhado (150g) + batata-doce (120g) + legumes salteados",
-    "Filé de peixe assado (150g) + arroz integral (4 col. sopa) + brócolis e cenoura",
-    "Carne moída magra (150g) + purê de mandioquinha + salada verde",
-    "Frango desfiado (150g) + quinoa (4 col. sopa) + legumes grelhados",
-  ]},
-  { id: "postWorkout", label: "Pós-treino / Lanche da Tarde", time: "16:30 – 17:30", unlock: "16:30", kcal: 300, options: [
-    "1 scoop de whey protein + 1 banana pequena",
-    "Sanduíche natural (pão integral + frango desfiado + folhas verdes)",
-    "Vitamina de frutas com leite desnatado",
-    "Ovos cozidos (2 unid.) + 1 fruta",
-  ]},
-  { id: "dinner", label: "Jantar", time: "19:30 – 20:30", unlock: "19:30", kcal: 550, options: [
-    "Filé de frango grelhado (150g) + arroz integral (3 col. sopa) + legumes assados",
-    "Omelete de 3 ovos com espinafre e queijo branco + salada + batata-doce (80g)",
-    "Carne magra grelhada (150g) + purê de batata-doce + legumes no vapor",
-    "Filé de peixe grelhado (150g) + legumes salteados + salada verde",
-    "Sopa proteica de frango desfiado com legumes + torrada integral",
-  ]},
-  { id: "supper", label: "Ceia (opcional)", time: "22:00 – 22:30", unlock: "22:00", kcal: 150, options: [
-    "Iogurte natural integral + canela",
-    "Meio scoop de whey protein diluído em água",
-    "Chá de camomila ou erva-cidreira sem açúcar",
-  ]},
-];
+const MEALS = [{
+  id: "breakfast",
+  label: "Café da Manhã",
+  time: "07:00 – 08:00",
+  unlock: "07:00",
+  kcal: 450,
+  options: ["3 ovos mexidos + 1 fatia de pão integral + 1 fruta + café sem açúcar", "Aveia (3 col. sopa) com leite desnatado + banana + pasta de amendoim (1 col. sopa)", "Tapioca (2 col. sopa de goma) com ovo e queijo branco + 1 fruta", "Panqueca fit (2 ovos + banana + aveia) + café sem açúcar", "Iogurte natural integral + aveia (2 col. sopa) + fruta picada"]
+}, {
+  id: "morningSnack",
+  label: "Lanche da Manhã",
+  time: "10:00 – 10:30",
+  unlock: "10:00",
+  kcal: 150,
+  options: ["Iogurte natural desnatado + canela", "1 fruta + castanhas/amêndoas (punhado pequeno)", "1 fatia de queijo branco + 2 torradas integrais", "1 fruta + 1 fatia de peito de peru"]
+}, {
+  id: "lunch",
+  label: "Almoço",
+  time: "12:00 – 13:00",
+  unlock: "12:00",
+  kcal: 600,
+  options: ["Arroz (4 col. sopa) + feijão (2 col. sopa) + frango grelhado (150g) + salada + azeite", "Patinho grelhado (150g) + batata-doce (120g) + legumes salteados", "Filé de peixe assado (150g) + arroz integral (4 col. sopa) + brócolis e cenoura", "Carne moída magra (150g) + purê de mandioquinha + salada verde", "Frango desfiado (150g) + quinoa (4 col. sopa) + legumes grelhados"]
+}, {
+  id: "postWorkout",
+  label: "Pós-treino / Lanche da Tarde",
+  time: "16:30 – 17:30",
+  unlock: "16:30",
+  kcal: 300,
+  options: ["1 scoop de whey protein + 1 banana pequena", "Sanduíche natural (pão integral + frango desfiado + folhas verdes)", "Vitamina de frutas com leite desnatado", "Ovos cozidos (2 unid.) + 1 fruta"]
+}, {
+  id: "dinner",
+  label: "Jantar",
+  time: "19:30 – 20:30",
+  unlock: "19:30",
+  kcal: 550,
+  options: ["Filé de frango grelhado (150g) + arroz integral (3 col. sopa) + legumes assados", "Omelete de 3 ovos com espinafre e queijo branco + salada + batata-doce (80g)", "Carne magra grelhada (150g) + purê de batata-doce + legumes no vapor", "Filé de peixe grelhado (150g) + legumes salteados + salada verde", "Sopa proteica de frango desfiado com legumes + torrada integral"]
+}, {
+  id: "supper",
+  label: "Ceia (opcional)",
+  time: "22:00 – 22:30",
+  unlock: "22:00",
+  kcal: 150,
+  options: ["Iogurte natural integral + canela", "Meio scoop de whey protein diluído em água", "Chá de camomila ou erva-cidreira sem açúcar"]
+}];
 
 /* ============================= STORAGE (localStorage) ============================= */
 const todayStr = () => new Date().toISOString().slice(0, 10);
-const fmtShort = (iso) => { const [y,m,d] = iso.split("-"); return `${d}/${m}`; };
-const emptyDay = () => ({ meals: {}, water: 0, whey: { post: false, ceia: false } });
-
+const fmtShort = iso => {
+  const [y, m, d] = iso.split("-");
+  return `${d}/${m}`;
+};
+const emptyDay = () => ({
+  meals: {},
+  water: 0,
+  whey: {
+    post: false,
+    ceia: false
+  }
+});
 function lsGet(key, fallback) {
   try {
     const raw = localStorage.getItem(key);
     return raw ? JSON.parse(raw) : fallback;
-  } catch { return fallback; }
+  } catch {
+    return fallback;
+  }
 }
 function lsSet(key, value) {
-  try { localStorage.setItem(key, JSON.stringify(value)); return true; }
-  catch { return false; }
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 /* ============================= APP ============================= */
@@ -123,342 +241,687 @@ function PerformanceApp() {
   const [runsLog, setRunsLog] = useState(() => lsGet("runs-log", []));
   const [openMeal, setOpenMeal] = useState(null);
   const [customMeal, setCustomMeal] = useState(null);
-  const [customDraft, setCustomDraft] = useState({ desc: "", kcal: "" });
+  const [customDraft, setCustomDraft] = useState({
+    desc: "",
+    kcal: ""
+  });
   const [showRunForm, setShowRunForm] = useState(false);
   const [showWeightForm, setShowWeightForm] = useState(false);
-  const [runDraft, setRunDraft] = useState({ duration: "", distance: "" });
+  const [runDraft, setRunDraft] = useState({
+    duration: "",
+    distance: ""
+  });
   const [weightDraft, setWeightDraft] = useState("");
   const [now, setNow] = useState(new Date());
-
-  useEffect(() => { const t = setInterval(() => setNow(new Date()), 30000); return () => clearInterval(t); }, []);
-
-  const isUnlocked = useCallback((meal) => {
+  useEffect(() => {
+    const t = setInterval(() => setNow(new Date()), 30000);
+    return () => clearInterval(t);
+  }, []);
+  const isUnlocked = useCallback(meal => {
     const [h, m] = meal.unlock.split(":").map(Number);
-    const unlockTime = new Date(now); unlockTime.setHours(h, m, 0, 0);
+    const unlockTime = new Date(now);
+    unlockTime.setHours(h, m, 0, 0);
     return now >= unlockTime;
   }, [now]);
-
-  const timeUntil = (meal) => {
+  const timeUntil = meal => {
     const [h, m] = meal.unlock.split(":").map(Number);
-    const unlockTime = new Date(now); unlockTime.setHours(h, m, 0, 0);
+    const unlockTime = new Date(now);
+    unlockTime.setHours(h, m, 0, 0);
     const diffMin = Math.round((unlockTime - now) / 60000);
-    if (diffMin >= 60) { const hrs = Math.floor(diffMin/60), mins = diffMin%60; return `libera em ${hrs}h${mins?` ${mins}min`:""}`; }
+    if (diffMin >= 60) {
+      const hrs = Math.floor(diffMin / 60),
+        mins = diffMin % 60;
+      return `libera em ${hrs}h${mins ? ` ${mins}min` : ""}`;
+    }
     return `libera em ${diffMin} min`;
   };
-
-  const persistDay = useCallback((nextDay) => {
+  const persistDay = useCallback(nextDay => {
     setDay(nextDay);
-    const anyDone = Object.values(nextDay.meals).some((m) => m && m.done);
-    setActiveDays((prev) => {
+    const anyDone = Object.values(nextDay.meals).some(m => m && m.done);
+    setActiveDays(prev => {
       const set = new Set(prev);
-      if (anyDone) set.add(date); else set.delete(date);
+      if (anyDone) set.add(date);else set.delete(date);
       const arr = Array.from(set);
       lsSet("active-days", arr);
       return arr;
     });
     lsSet(`day:${date}`, nextDay);
   }, [date]);
-
   const selectOption = (meal, idx) => {
     if (!isUnlocked(meal)) return;
-    persistDay({ ...day, meals: { ...day.meals, [meal.id]: { option: idx, done: true } } });
+    persistDay({
+      ...day,
+      meals: {
+        ...day.meals,
+        [meal.id]: {
+          option: idx,
+          done: true
+        }
+      }
+    });
     setOpenMeal(null);
   };
-  const undoMeal = (mealId) => {
-    const nextMeals = { ...day.meals }; delete nextMeals[mealId];
-    persistDay({ ...day, meals: nextMeals });
+  const undoMeal = mealId => {
+    const nextMeals = {
+      ...day.meals
+    };
+    delete nextMeals[mealId];
+    persistDay({
+      ...day,
+      meals: nextMeals
+    });
   };
-  const saveCustomFood = (meal) => {
+  const saveCustomFood = meal => {
     const kcalVal = Number(customDraft.kcal);
     if (!customDraft.desc.trim() || !kcalVal || kcalVal <= 0) return;
-    persistDay({ ...day, meals: { ...day.meals, [meal.id]: { custom: true, desc: customDraft.desc.trim(), kcal: kcalVal, done: true } } });
-    setCustomMeal(null); setCustomDraft({ desc: "", kcal: "" }); setOpenMeal(null);
+    persistDay({
+      ...day,
+      meals: {
+        ...day.meals,
+        [meal.id]: {
+          custom: true,
+          desc: customDraft.desc.trim(),
+          kcal: kcalVal,
+          done: true
+        }
+      }
+    });
+    setCustomMeal(null);
+    setCustomDraft({
+      desc: "",
+      kcal: ""
+    });
+    setOpenMeal(null);
   };
-
-  const trainedToday = runsLog.some((r) => r.date === date);
+  const trainedToday = runsLog.some(r => r.date === date);
   const waterTarget = trainedToday ? WATER_TARGET_TRAINING : WATER_TARGET_BASE;
-  const addWater = (delta) => persistDay({ ...day, water: Math.max(0, Math.min(waterTarget + 1000, day.water + delta)) });
-  const toggleWhey = (key) => persistDay({ ...day, whey: { ...day.whey, [key]: !day.whey[key] } });
-
-  const saveRun = () => {
-    const entry = { date, duration: runDraft.duration ? Number(runDraft.duration) : null, distance: runDraft.distance ? Number(runDraft.distance) : null };
-    const next = [...runsLog.filter((r) => r.date !== date), entry].sort((a,b) => a.date < b.date ? 1 : -1);
-    setRunsLog(next); lsSet("runs-log", next);
-    setShowRunForm(false); setRunDraft({ duration: "", distance: "" });
-  };
-  const removeRun = (idx) => { const next = runsLog.filter((_,i) => i !== idx); setRunsLog(next); lsSet("runs-log", next); };
-
-  const saveWeight = () => {
-    const kg = Number(weightDraft); if (!kg || kg <= 0) return;
-    const next = [...weightLog.filter((w) => w.date !== date), { date, kg }].sort((a,b) => a.date < b.date ? -1 : 1);
-    setWeightLog(next); lsSet("weight-log", next);
-    setShowWeightForm(false); setWeightDraft("");
-  };
-
-  const resetToday = () => { if (window.confirm("Limpar todos os dados de hoje (refeições, água, whey)?")) persistDay(emptyDay()); };
-
-  const doneMeals = MEALS.filter((m) => day.meals[m.id] && day.meals[m.id].done).map((m) => {
-    const state = day.meals[m.id];
-    return { ...m, kcal: state.custom ? state.kcal : m.kcal };
+  const addWater = delta => persistDay({
+    ...day,
+    water: Math.max(0, Math.min(waterTarget + 1000, day.water + delta))
   });
-  const kcalConsumed = doneMeals.reduce((s,m) => s + m.kcal, 0);
-  const macrosConsumed = doneMeals.reduce((acc,m) => {
-    acc.protein += (m.kcal * MACRO_RATIO.protein) / 4;
-    acc.carb += (m.kcal * MACRO_RATIO.carb) / 4;
-    acc.fat += (m.kcal * MACRO_RATIO.fat) / 9;
+  const toggleWhey = key => persistDay({
+    ...day,
+    whey: {
+      ...day.whey,
+      [key]: !day.whey[key]
+    }
+  });
+  const saveRun = () => {
+    const entry = {
+      date,
+      duration: runDraft.duration ? Number(runDraft.duration) : null,
+      distance: runDraft.distance ? Number(runDraft.distance) : null
+    };
+    const next = [...runsLog.filter(r => r.date !== date), entry].sort((a, b) => a.date < b.date ? 1 : -1);
+    setRunsLog(next);
+    lsSet("runs-log", next);
+    setShowRunForm(false);
+    setRunDraft({
+      duration: "",
+      distance: ""
+    });
+  };
+  const removeRun = idx => {
+    const next = runsLog.filter((_, i) => i !== idx);
+    setRunsLog(next);
+    lsSet("runs-log", next);
+  };
+  const saveWeight = () => {
+    const kg = Number(weightDraft);
+    if (!kg || kg <= 0) return;
+    const next = [...weightLog.filter(w => w.date !== date), {
+      date,
+      kg
+    }].sort((a, b) => a.date < b.date ? -1 : 1);
+    setWeightLog(next);
+    lsSet("weight-log", next);
+    setShowWeightForm(false);
+    setWeightDraft("");
+  };
+  const resetToday = () => {
+    if (window.confirm("Limpar todos os dados de hoje (refeições, água, whey)?")) persistDay(emptyDay());
+  };
+  const doneMeals = MEALS.filter(m => day.meals[m.id] && day.meals[m.id].done).map(m => {
+    const state = day.meals[m.id];
+    return {
+      ...m,
+      kcal: state.custom ? state.kcal : m.kcal
+    };
+  });
+  const kcalConsumed = doneMeals.reduce((s, m) => s + m.kcal, 0);
+  const macrosConsumed = doneMeals.reduce((acc, m) => {
+    acc.protein += m.kcal * MACRO_RATIO.protein / 4;
+    acc.carb += m.kcal * MACRO_RATIO.carb / 4;
+    acc.fat += m.kcal * MACRO_RATIO.fat / 9;
     return acc;
-  }, { protein: 0, carb: 0, fat: 0 });
-  const kcalPct = Math.min(100, Math.round((kcalConsumed / TARGETS.kcal) * 100));
-  const waterPct = Math.min(100, Math.round((day.water / waterTarget) * 100));
-
+  }, {
+    protein: 0,
+    carb: 0,
+    fat: 0
+  });
+  const kcalPct = Math.min(100, Math.round(kcalConsumed / TARGETS.kcal * 100));
+  const waterPct = Math.min(100, Math.round(day.water / waterTarget * 100));
   const streak = useMemo(() => {
-    const set = new Set(activeDays); let count = 0; let cursor = new Date();
+    const set = new Set(activeDays);
+    let count = 0;
+    let cursor = new Date();
     if (!set.has(todayStr())) cursor.setDate(cursor.getDate() - 1);
     while (true) {
-      const iso = cursor.toISOString().slice(0,10);
-      if (set.has(iso)) { count += 1; cursor.setDate(cursor.getDate()-1); } else break;
+      const iso = cursor.toISOString().slice(0, 10);
+      if (set.has(iso)) {
+        count += 1;
+        cursor.setDate(cursor.getDate() - 1);
+      } else break;
     }
     return count;
   }, [activeDays]);
-
   const weekRuns = useMemo(() => {
-    const now2 = new Date(); const day0 = now2.getDay();
-    const monday = new Date(now2); monday.setDate(now2.getDate() - ((day0+6)%7)); monday.setHours(0,0,0,0);
-    return runsLog.filter((r) => new Date(r.date + "T00:00:00") >= monday);
+    const now2 = new Date();
+    const day0 = now2.getDay();
+    const monday = new Date(now2);
+    monday.setDate(now2.getDate() - (day0 + 6) % 7);
+    monday.setHours(0, 0, 0, 0);
+    return runsLog.filter(r => new Date(r.date + "T00:00:00") >= monday);
   }, [runsLog]);
-
-  const currentWeight = weightLog.length ? weightLog[weightLog.length-1].kg : START_WEIGHT;
+  const currentWeight = weightLog.length ? weightLog[weightLog.length - 1].kg : START_WEIGHT;
   const weightDelta = (currentWeight - START_WEIGHT).toFixed(1);
-  const chartData = useMemo(() => [{ date: "início", kg: START_WEIGHT }].concat(weightLog.map((w) => ({ date: fmtShort(w.date), kg: w.kg }))), [weightLog]);
-
-  const greeting = (() => { const h = new Date().getHours(); if (h<12) return "Bom dia"; if (h<18) return "Boa tarde"; return "Boa noite"; })();
-
-  return (
-    <div className="pr-app">
-      <div className="pr-header">
-        <div>
-          <div className="pr-eyebrow">PAINEL DE PERFORMANCE</div>
-          <h1>{greeting}, Paulo Ricardo</h1>
-          <div className="pr-date"><IconCalendar size={14} />{new Date().toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"long"})}</div>
-        </div>
-        <div className="pr-streak">
-          <IconWifi size={18} className="pr-streak-icon" style={{color:"var(--c-green)"}} />
-          <div><div className="pr-streak-num">{streak}</div><div className="pr-streak-label">dias seguidos</div></div>
-        </div>
-      </div>
-
-      <div className="pr-top-grid">
-        <div className="pr-card pr-ring-card">
-          <div className="pr-radar">
-            <svg viewBox="0 0 200 200" className="pr-radar-svg">
-              <circle cx="100" cy="100" r="90" className="pr-radar-ring" />
-              <circle cx="100" cy="100" r="65" className="pr-radar-ring" />
-              <circle cx="100" cy="100" r="40" className="pr-radar-ring" />
-              <g className="pr-radar-sweep-group"><path d="M100 100 L100 10 A90 90 0 0 1 172 60 Z" className="pr-radar-sweep" /></g>
-              <circle cx="100" cy="100" r="90" className="pr-radar-progress" style={{ strokeDasharray: `${(kcalPct/100)*565.5} 565.5` }} />
-            </svg>
-            <div className="pr-radar-center"><div className="pr-radar-num">{kcalConsumed}</div><div className="pr-radar-den">/ {TARGETS.kcal} kcal</div></div>
-          </div>
-          <div className="pr-macro-bars">
-            <MacroBar label="P" value={macrosConsumed.protein} target={TARGETS.protein} color="var(--c-protein)" />
-            <MacroBar label="C" value={macrosConsumed.carb} target={TARGETS.carb} color="var(--c-carb)" />
-            <MacroBar label="G" value={macrosConsumed.fat} target={TARGETS.fat} color="var(--c-fat)" />
-          </div>
-        </div>
-        <div className="pr-stats-col">
-          <div className="pr-card pr-stat">
-            <div className="pr-stat-icon" style={{background:"rgba(56,189,248,0.15)",color:"var(--c-cyan)"}}><IconTrendingUp size={16}/></div>
-            <div><div className="pr-stat-num">{currentWeight} kg</div><div className="pr-stat-label">{weightDelta>0?"+":""}{weightDelta} kg desde o início</div></div>
-          </div>
-          <div className="pr-card pr-stat">
-            <div className="pr-stat-icon" style={{background:"rgba(251,146,60,0.15)",color:"var(--c-amber)"}}><IconFootprints size={16}/></div>
-            <div><div className="pr-stat-num">{weekRuns.length} / {RUN_WEEKLY_GOAL}</div><div className="pr-stat-label">corridas essa semana</div></div>
-          </div>
-          <div className="pr-card pr-stat">
-            <div className="pr-stat-icon" style={{background:"rgba(45,212,191,0.15)",color:"var(--c-teal)"}}><IconDroplet size={16}/></div>
-            <div><div className="pr-stat-num">{(day.water/1000).toFixed(2)} L</div><div className="pr-stat-label">de {(waterTarget/1000).toFixed(1)} L hoje</div></div>
-          </div>
-        </div>
-      </div>
-
-      <div className="pr-main-grid">
-        <div className="pr-col">
-          <SectionTitle text="Checklist de Refeições" />
-          {MEALS.map((meal) => {
-            const state = day.meals[meal.id];
-            const open = openMeal === meal.id;
-            const unlocked = isUnlocked(meal);
-            const showingCustomForm = customMeal === meal.id;
-            const chosenText = state && state.done ? (state.custom ? `${state.desc} · ${state.kcal} kcal (registrado por você)` : meal.options[state.option]) : null;
-            return (
-              <div className={`pr-meal ${state&&state.done?"is-done":""} ${!unlocked && !(state&&state.done)?"is-locked":""}`} key={meal.id}>
-                <button className="pr-meal-head" onClick={() => setOpenMeal(open?null:meal.id)}>
-                  <div className="pr-meal-check">
-                    {state && state.done ? <IconCheck size={19} style={{color:"var(--c-green)"}} /> : unlocked ? <IconCircle size={19} style={{color:"var(--text-muted)"}} /> : <IconLock size={16} style={{color:"var(--text-muted)"}} />}
-                  </div>
-                  <div className="pr-meal-info">
-                    <div className="pr-meal-label">{meal.label}</div>
-                    <div className="pr-meal-time">{meal.time} · ~{meal.kcal} kcal
-                      {!unlocked && !(state&&state.done) && <span className="pr-lock-badge">{timeUntil(meal)}</span>}
-                    </div>
-                    {chosenText && <div className="pr-meal-chosen">{chosenText}</div>}
-                  </div>
-                  {open ? <IconChevUp size={16} style={{color:"var(--text-muted)"}} /> : <IconChevDown size={16} style={{color:"var(--text-muted)"}} />}
-                </button>
-                {open && (
-                  <div className="pr-meal-body">
-                    {!unlocked && !(state&&state.done) ? (
-                      <div className="pr-locked-notice"><IconLock size={13}/> Essa refeição libera às {meal.unlock} — {timeUntil(meal)}.</div>
-                    ) : (
-                      <React.Fragment>
-                        {meal.options.map((opt, idx) => (
-                          <button key={idx} className={`pr-option ${state&&state.option===idx&&state.done&&!state.custom?"is-selected":""}`} onClick={() => selectOption(meal, idx)}>
-                            <span className="pr-option-tag">OPÇÃO {idx+1}</span>{opt}
-                          </button>
-                        ))}
-                        {!showingCustomForm ? (
-                          <button className={`pr-option pr-option-custom ${state&&state.custom?"is-selected":""}`} onClick={() => { setCustomMeal(meal.id); setCustomDraft({ desc: state&&state.custom?state.desc:"", kcal: state&&state.custom?String(state.kcal):"" }); }}>
-                            <span className="pr-option-tag pr-option-tag-alt">OUTRO</span>Comi outra coisa — registrar manualmente
-                          </button>
-                        ) : (
-                          <div className="pr-inline-form">
-                            <input type="text" placeholder="O que você comeu?" value={customDraft.desc} onChange={(e)=>setCustomDraft({...customDraft, desc:e.target.value})} />
-                            <input type="number" placeholder="Calorias aproximadas (kcal)" value={customDraft.kcal} onChange={(e)=>setCustomDraft({...customDraft, kcal:e.target.value})} />
-                            <div className="pr-inline-actions">
-                              <button className="pr-btn-primary" onClick={()=>saveCustomFood(meal)}>Salvar</button>
-                              <button className="pr-btn-ghost" onClick={()=>setCustomMeal(null)}>Cancelar</button>
-                            </div>
-                          </div>
-                        )}
-                        {state && state.done && <button className="pr-undo" onClick={()=>undoMeal(meal.id)}><IconX size={13}/> Desmarcar refeição</button>}
-                      </React.Fragment>
-                    )}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="pr-col">
-          <SectionTitle text="Água" />
-          <div className="pr-card">
-            <div className="pr-water-row">
-              <button className="pr-round-btn" onClick={()=>addWater(-WATER_STEP)}><IconMinus size={16}/></button>
-              <div className="pr-water-mid">
-                <div className="pr-water-num">{(day.water/1000).toFixed(2)} L</div>
-                <div className="pr-progress-bar"><div className="pr-progress-fill" style={{width:`${waterPct}%`, background:"var(--c-cyan)"}} /></div>
-                <div className="pr-water-sub">Meta {trainedToday?"de treino":"padrão"}: {(waterTarget/1000).toFixed(1)} L</div>
-              </div>
-              <button className="pr-round-btn" onClick={()=>addWater(WATER_STEP)}><IconPlus size={16}/></button>
-            </div>
-          </div>
-
-          <SectionTitle text="Suplementação" />
-          <div className="pr-card pr-whey-card">
-            <div className="pr-whey-note">Whey Protein · 1 scoop (≈25-30g) diluído em água ou leite desnatado</div>
-            <label className="pr-checkline"><input type="checkbox" checked={day.whey.post} onChange={()=>toggleWhey("post")} /><span>Tomei o whey pós-treino</span></label>
-            <label className="pr-checkline"><input type="checkbox" checked={day.whey.ceia} onChange={()=>toggleWhey("ceia")} /><span>Tomei meio scoop na ceia (opcional)</span></label>
-          </div>
-
-          <SectionTitle text="Corridas" />
-          <div className="pr-card">
-            <div className="pr-progress-bar" style={{marginBottom:10}}>
-              <div className="pr-progress-fill" style={{width:`${Math.min(100,(weekRuns.length/RUN_WEEKLY_GOAL)*100)}%`, background:"var(--c-amber)"}} />
-            </div>
-            <div className="pr-run-list">
-              {runsLog.slice(0,5).map((r,idx) => (
-                <div className="pr-run-item" key={idx}>
-                  <IconFootprints size={14} style={{color:"var(--c-amber)"}} />
-                  <span className="pr-run-date">{fmtShort(r.date)}</span>
-                  <span className="pr-run-detail">{r.duration?`${r.duration} min`:""}{r.duration&&r.distance?" · ":""}{r.distance?`${r.distance} km`:""}{!r.duration&&!r.distance?"registrada":""}</span>
-                  <button className="pr-run-remove" onClick={()=>removeRun(idx)}><IconX size={12}/></button>
-                </div>
-              ))}
-              {!runsLog.length && <div className="pr-empty">Nenhuma corrida registrada ainda.</div>}
-            </div>
-            {!showRunForm ? (
-              <button className="pr-btn-outline" onClick={()=>setShowRunForm(true)}><IconPlus size={14}/> Registrar corrida de hoje</button>
-            ) : (
-              <div className="pr-inline-form">
-                <input type="number" placeholder="Duração (min)" value={runDraft.duration} onChange={(e)=>setRunDraft({...runDraft, duration:e.target.value})} />
-                <input type="number" placeholder="Distância (km)" value={runDraft.distance} onChange={(e)=>setRunDraft({...runDraft, distance:e.target.value})} />
-                <div className="pr-inline-actions">
-                  <button className="pr-btn-primary" onClick={saveRun}>Salvar</button>
-                  <button className="pr-btn-ghost" onClick={()=>setShowRunForm(false)}>Cancelar</button>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      <SectionTitle text="Evolução de Peso" />
-      <div className="pr-card">
-        <div className="pr-weight-top">
-          <div>
-            <div className="pr-weight-num">{currentWeight} kg</div>
-            <div className="pr-weight-sub">Início: {START_WEIGHT} kg · Variação: {weightDelta>0?"+":""}{weightDelta} kg</div>
-          </div>
-          {!showWeightForm ? (
-            <button className="pr-btn-outline" onClick={()=>setShowWeightForm(true)}><IconPlus size={14}/> Registrar peso de hoje</button>
-          ) : (
-            <div className="pr-inline-form pr-inline-form-row">
-              <input type="number" placeholder="Peso (kg)" value={weightDraft} onChange={(e)=>setWeightDraft(e.target.value)} />
-              <button className="pr-btn-primary" onClick={saveWeight}>Salvar</button>
-              <button className="pr-btn-ghost" onClick={()=>setShowWeightForm(false)}>Cancelar</button>
-            </div>
-          )}
-        </div>
-        <SimpleLineChart data={chartData} />
-      </div>
-
-      <div className="pr-footer">
-        <span>Dados salvos automaticamente neste dispositivo (armazenamento local do navegador)</span>
-        <button className="pr-reset" onClick={resetToday}><IconReset size={12}/> Limpar hoje</button>
-      </div>
-    </div>
-  );
+  const chartData = useMemo(() => [{
+    date: "início",
+    kg: START_WEIGHT
+  }].concat(weightLog.map(w => ({
+    date: fmtShort(w.date),
+    kg: w.kg
+  }))), [weightLog]);
+  const greeting = (() => {
+    const h = new Date().getHours();
+    if (h < 12) return "Bom dia";
+    if (h < 18) return "Boa tarde";
+    return "Boa noite";
+  })();
+  return /*#__PURE__*/React.createElement("div", {
+    className: "pr-app"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pr-header"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "pr-eyebrow"
+  }, "PAINEL DE PERFORMANCE"), /*#__PURE__*/React.createElement("h1", null, greeting, ", Paulo Ricardo"), /*#__PURE__*/React.createElement("div", {
+    className: "pr-date"
+  }, /*#__PURE__*/React.createElement(IconCalendar, {
+    size: 14
+  }), new Date().toLocaleDateString("pt-BR", {
+    weekday: "long",
+    day: "2-digit",
+    month: "long"
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "pr-streak"
+  }, /*#__PURE__*/React.createElement(IconWifi, {
+    size: 18,
+    className: "pr-streak-icon",
+    style: {
+      color: "var(--c-green)"
+    }
+  }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "pr-streak-num"
+  }, streak), /*#__PURE__*/React.createElement("div", {
+    className: "pr-streak-label"
+  }, "dias seguidos")))), /*#__PURE__*/React.createElement("div", {
+    className: "pr-top-grid"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pr-card pr-ring-card"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pr-radar"
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 200 200",
+    className: "pr-radar-svg"
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: "100",
+    cy: "100",
+    r: "90",
+    className: "pr-radar-ring"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "100",
+    cy: "100",
+    r: "65",
+    className: "pr-radar-ring"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "100",
+    cy: "100",
+    r: "40",
+    className: "pr-radar-ring"
+  }), /*#__PURE__*/React.createElement("g", {
+    className: "pr-radar-sweep-group"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M100 100 L100 10 A90 90 0 0 1 172 60 Z",
+    className: "pr-radar-sweep"
+  })), /*#__PURE__*/React.createElement("circle", {
+    cx: "100",
+    cy: "100",
+    r: "90",
+    className: "pr-radar-progress",
+    style: {
+      strokeDasharray: `${kcalPct / 100 * 565.5} 565.5`
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pr-radar-center"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pr-radar-num"
+  }, kcalConsumed), /*#__PURE__*/React.createElement("div", {
+    className: "pr-radar-den"
+  }, "/ ", TARGETS.kcal, " kcal"))), /*#__PURE__*/React.createElement("div", {
+    className: "pr-macro-bars"
+  }, /*#__PURE__*/React.createElement(MacroBar, {
+    label: "P",
+    value: macrosConsumed.protein,
+    target: TARGETS.protein,
+    color: "var(--c-protein)"
+  }), /*#__PURE__*/React.createElement(MacroBar, {
+    label: "C",
+    value: macrosConsumed.carb,
+    target: TARGETS.carb,
+    color: "var(--c-carb)"
+  }), /*#__PURE__*/React.createElement(MacroBar, {
+    label: "G",
+    value: macrosConsumed.fat,
+    target: TARGETS.fat,
+    color: "var(--c-fat)"
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "pr-stats-col"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pr-card pr-stat"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pr-stat-icon",
+    style: {
+      background: "rgba(56,189,248,0.15)",
+      color: "var(--c-cyan)"
+    }
+  }, /*#__PURE__*/React.createElement(IconTrendingUp, {
+    size: 16
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "pr-stat-num"
+  }, currentWeight, " kg"), /*#__PURE__*/React.createElement("div", {
+    className: "pr-stat-label"
+  }, weightDelta > 0 ? "+" : "", weightDelta, " kg desde o início"))), /*#__PURE__*/React.createElement("div", {
+    className: "pr-card pr-stat"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pr-stat-icon",
+    style: {
+      background: "rgba(251,146,60,0.15)",
+      color: "var(--c-amber)"
+    }
+  }, /*#__PURE__*/React.createElement(IconFootprints, {
+    size: 16
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "pr-stat-num"
+  }, weekRuns.length, " / ", RUN_WEEKLY_GOAL), /*#__PURE__*/React.createElement("div", {
+    className: "pr-stat-label"
+  }, "corridas essa semana"))), /*#__PURE__*/React.createElement("div", {
+    className: "pr-card pr-stat"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pr-stat-icon",
+    style: {
+      background: "rgba(45,212,191,0.15)",
+      color: "var(--c-teal)"
+    }
+  }, /*#__PURE__*/React.createElement(IconDroplet, {
+    size: 16
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "pr-stat-num"
+  }, (day.water / 1000).toFixed(2), " L"), /*#__PURE__*/React.createElement("div", {
+    className: "pr-stat-label"
+  }, "de ", (waterTarget / 1000).toFixed(1), " L hoje"))))), /*#__PURE__*/React.createElement("div", {
+    className: "pr-main-grid"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pr-col"
+  }, /*#__PURE__*/React.createElement(SectionTitle, {
+    text: "Checklist de Refeições"
+  }), MEALS.map(meal => {
+    const state = day.meals[meal.id];
+    const open = openMeal === meal.id;
+    const unlocked = isUnlocked(meal);
+    const showingCustomForm = customMeal === meal.id;
+    const chosenText = state && state.done ? state.custom ? `${state.desc} · ${state.kcal} kcal (registrado por você)` : meal.options[state.option] : null;
+    return /*#__PURE__*/React.createElement("div", {
+      className: `pr-meal ${state && state.done ? "is-done" : ""} ${!unlocked && !(state && state.done) ? "is-locked" : ""}`,
+      key: meal.id
+    }, /*#__PURE__*/React.createElement("button", {
+      className: "pr-meal-head",
+      onClick: () => setOpenMeal(open ? null : meal.id)
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "pr-meal-check"
+    }, state && state.done ? /*#__PURE__*/React.createElement(IconCheck, {
+      size: 19,
+      style: {
+        color: "var(--c-green)"
+      }
+    }) : unlocked ? /*#__PURE__*/React.createElement(IconCircle, {
+      size: 19,
+      style: {
+        color: "var(--text-muted)"
+      }
+    }) : /*#__PURE__*/React.createElement(IconLock, {
+      size: 16,
+      style: {
+        color: "var(--text-muted)"
+      }
+    })), /*#__PURE__*/React.createElement("div", {
+      className: "pr-meal-info"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "pr-meal-label"
+    }, meal.label), /*#__PURE__*/React.createElement("div", {
+      className: "pr-meal-time"
+    }, meal.time, " · ~", meal.kcal, " kcal", !unlocked && !(state && state.done) && /*#__PURE__*/React.createElement("span", {
+      className: "pr-lock-badge"
+    }, timeUntil(meal))), chosenText && /*#__PURE__*/React.createElement("div", {
+      className: "pr-meal-chosen"
+    }, chosenText)), open ? /*#__PURE__*/React.createElement(IconChevUp, {
+      size: 16,
+      style: {
+        color: "var(--text-muted)"
+      }
+    }) : /*#__PURE__*/React.createElement(IconChevDown, {
+      size: 16,
+      style: {
+        color: "var(--text-muted)"
+      }
+    })), open && /*#__PURE__*/React.createElement("div", {
+      className: "pr-meal-body"
+    }, !unlocked && !(state && state.done) ? /*#__PURE__*/React.createElement("div", {
+      className: "pr-locked-notice"
+    }, /*#__PURE__*/React.createElement(IconLock, {
+      size: 13
+    }), " Essa refeição libera às ", meal.unlock, " — ", timeUntil(meal), ".") : /*#__PURE__*/React.createElement(React.Fragment, null, meal.options.map((opt, idx) => /*#__PURE__*/React.createElement("button", {
+      key: idx,
+      className: `pr-option ${state && state.option === idx && state.done && !state.custom ? "is-selected" : ""}`,
+      onClick: () => selectOption(meal, idx)
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "pr-option-tag"
+    }, "OPÇÃO ", idx + 1), opt)), !showingCustomForm ? /*#__PURE__*/React.createElement("button", {
+      className: `pr-option pr-option-custom ${state && state.custom ? "is-selected" : ""}`,
+      onClick: () => {
+        setCustomMeal(meal.id);
+        setCustomDraft({
+          desc: state && state.custom ? state.desc : "",
+          kcal: state && state.custom ? String(state.kcal) : ""
+        });
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "pr-option-tag pr-option-tag-alt"
+    }, "OUTRO"), "Comi outra coisa — registrar manualmente") : /*#__PURE__*/React.createElement("div", {
+      className: "pr-inline-form"
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "text",
+      placeholder: "O que você comeu?",
+      value: customDraft.desc,
+      onChange: e => setCustomDraft({
+        ...customDraft,
+        desc: e.target.value
+      })
+    }), /*#__PURE__*/React.createElement("input", {
+      type: "number",
+      placeholder: "Calorias aproximadas (kcal)",
+      value: customDraft.kcal,
+      onChange: e => setCustomDraft({
+        ...customDraft,
+        kcal: e.target.value
+      })
+    }), /*#__PURE__*/React.createElement("div", {
+      className: "pr-inline-actions"
+    }, /*#__PURE__*/React.createElement("button", {
+      className: "pr-btn-primary",
+      onClick: () => saveCustomFood(meal)
+    }, "Salvar"), /*#__PURE__*/React.createElement("button", {
+      className: "pr-btn-ghost",
+      onClick: () => setCustomMeal(null)
+    }, "Cancelar"))), state && state.done && /*#__PURE__*/React.createElement("button", {
+      className: "pr-undo",
+      onClick: () => undoMeal(meal.id)
+    }, /*#__PURE__*/React.createElement(IconX, {
+      size: 13
+    }), " Desmarcar refeição"))));
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pr-col"
+  }, /*#__PURE__*/React.createElement(SectionTitle, {
+    text: "Água"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "pr-card"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pr-water-row"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "pr-round-btn",
+    onClick: () => addWater(-WATER_STEP)
+  }, /*#__PURE__*/React.createElement(IconMinus, {
+    size: 16
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pr-water-mid"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pr-water-num"
+  }, (day.water / 1000).toFixed(2), " L"), /*#__PURE__*/React.createElement("div", {
+    className: "pr-progress-bar"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pr-progress-fill",
+    style: {
+      width: `${waterPct}%`,
+      background: "var(--c-cyan)"
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pr-water-sub"
+  }, "Meta ", trainedToday ? "de treino" : "padrão", ": ", (waterTarget / 1000).toFixed(1), " L")), /*#__PURE__*/React.createElement("button", {
+    className: "pr-round-btn",
+    onClick: () => addWater(WATER_STEP)
+  }, /*#__PURE__*/React.createElement(IconPlus, {
+    size: 16
+  })))), /*#__PURE__*/React.createElement(SectionTitle, {
+    text: "Suplementação"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "pr-card pr-whey-card"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pr-whey-note"
+  }, "Whey Protein · 1 scoop (≈25-30g) diluído em água ou leite desnatado"), /*#__PURE__*/React.createElement("label", {
+    className: "pr-checkline"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "checkbox",
+    checked: day.whey.post,
+    onChange: () => toggleWhey("post")
+  }), /*#__PURE__*/React.createElement("span", null, "Tomei o whey pós-treino")), /*#__PURE__*/React.createElement("label", {
+    className: "pr-checkline"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "checkbox",
+    checked: day.whey.ceia,
+    onChange: () => toggleWhey("ceia")
+  }), /*#__PURE__*/React.createElement("span", null, "Tomei meio scoop na ceia (opcional)"))), /*#__PURE__*/React.createElement(SectionTitle, {
+    text: "Corridas"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "pr-card"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pr-progress-bar",
+    style: {
+      marginBottom: 10
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pr-progress-fill",
+    style: {
+      width: `${Math.min(100, weekRuns.length / RUN_WEEKLY_GOAL * 100)}%`,
+      background: "var(--c-amber)"
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pr-run-list"
+  }, runsLog.slice(0, 5).map((r, idx) => /*#__PURE__*/React.createElement("div", {
+    className: "pr-run-item",
+    key: idx
+  }, /*#__PURE__*/React.createElement(IconFootprints, {
+    size: 14,
+    style: {
+      color: "var(--c-amber)"
+    }
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "pr-run-date"
+  }, fmtShort(r.date)), /*#__PURE__*/React.createElement("span", {
+    className: "pr-run-detail"
+  }, r.duration ? `${r.duration} min` : "", r.duration && r.distance ? " · " : "", r.distance ? `${r.distance} km` : "", !r.duration && !r.distance ? "registrada" : ""), /*#__PURE__*/React.createElement("button", {
+    className: "pr-run-remove",
+    onClick: () => removeRun(idx)
+  }, /*#__PURE__*/React.createElement(IconX, {
+    size: 12
+  })))), !runsLog.length && /*#__PURE__*/React.createElement("div", {
+    className: "pr-empty"
+  }, "Nenhuma corrida registrada ainda.")), !showRunForm ? /*#__PURE__*/React.createElement("button", {
+    className: "pr-btn-outline",
+    onClick: () => setShowRunForm(true)
+  }, /*#__PURE__*/React.createElement(IconPlus, {
+    size: 14
+  }), " Registrar corrida de hoje") : /*#__PURE__*/React.createElement("div", {
+    className: "pr-inline-form"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    placeholder: "Duração (min)",
+    value: runDraft.duration,
+    onChange: e => setRunDraft({
+      ...runDraft,
+      duration: e.target.value
+    })
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    placeholder: "Distância (km)",
+    value: runDraft.distance,
+    onChange: e => setRunDraft({
+      ...runDraft,
+      distance: e.target.value
+    })
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "pr-inline-actions"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "pr-btn-primary",
+    onClick: saveRun
+  }, "Salvar"), /*#__PURE__*/React.createElement("button", {
+    className: "pr-btn-ghost",
+    onClick: () => setShowRunForm(false)
+  }, "Cancelar")))))), /*#__PURE__*/React.createElement(SectionTitle, {
+    text: "Evolução de Peso"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "pr-card"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pr-weight-top"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "pr-weight-num"
+  }, currentWeight, " kg"), /*#__PURE__*/React.createElement("div", {
+    className: "pr-weight-sub"
+  }, "Início: ", START_WEIGHT, " kg · Variação: ", weightDelta > 0 ? "+" : "", weightDelta, " kg")), !showWeightForm ? /*#__PURE__*/React.createElement("button", {
+    className: "pr-btn-outline",
+    onClick: () => setShowWeightForm(true)
+  }, /*#__PURE__*/React.createElement(IconPlus, {
+    size: 14
+  }), " Registrar peso de hoje") : /*#__PURE__*/React.createElement("div", {
+    className: "pr-inline-form pr-inline-form-row"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    placeholder: "Peso (kg)",
+    value: weightDraft,
+    onChange: e => setWeightDraft(e.target.value)
+  }), /*#__PURE__*/React.createElement("button", {
+    className: "pr-btn-primary",
+    onClick: saveWeight
+  }, "Salvar"), /*#__PURE__*/React.createElement("button", {
+    className: "pr-btn-ghost",
+    onClick: () => setShowWeightForm(false)
+  }, "Cancelar"))), /*#__PURE__*/React.createElement(SimpleLineChart, {
+    data: chartData
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pr-footer"
+  }, /*#__PURE__*/React.createElement("span", null, "Dados salvos automaticamente neste dispositivo (armazenamento local do navegador)"), /*#__PURE__*/React.createElement("button", {
+    className: "pr-reset",
+    onClick: resetToday
+  }, /*#__PURE__*/React.createElement(IconReset, {
+    size: 12
+  }), " Limpar hoje")));
 }
-
-function SectionTitle({ text }) {
-  return <div className="pr-section-title"><span className="pr-dot" /><h2>{text}</h2></div>;
+function SectionTitle({
+  text
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "pr-section-title"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "pr-dot"
+  }), /*#__PURE__*/React.createElement("h2", null, text));
 }
-function MacroBar({ label, value, target, color }) {
-  const pct = Math.min(100, Math.round((value/target)*100));
-  return (
-    <div className="pr-macro-item">
-      <div className="pr-macro-top"><span className="pr-macro-label" style={{color}}>{label}</span><span className="pr-macro-val">{Math.round(value)}/{target}g</span></div>
-      <div className="pr-progress-bar sm"><div className="pr-progress-fill" style={{width:`${pct}%`, background:color}} /></div>
-    </div>
-  );
+function MacroBar({
+  label,
+  value,
+  target,
+  color
+}) {
+  const pct = Math.min(100, Math.round(value / target * 100));
+  return /*#__PURE__*/React.createElement("div", {
+    className: "pr-macro-item"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pr-macro-top"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "pr-macro-label",
+    style: {
+      color
+    }
+  }, label), /*#__PURE__*/React.createElement("span", {
+    className: "pr-macro-val"
+  }, Math.round(value), "/", target, "g")), /*#__PURE__*/React.createElement("div", {
+    className: "pr-progress-bar sm"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pr-progress-fill",
+    style: {
+      width: `${pct}%`,
+      background: color
+    }
+  })));
 }
 
 /* gráfico de linha simples em SVG puro (sem dependências) */
-function SimpleLineChart({ data }) {
-  const w = 600, h = 200, pad = 30;
+function SimpleLineChart({
+  data
+}) {
+  const w = 600,
+    h = 200,
+    pad = 30;
   const kgs = data.map(d => d.kg);
-  const min = Math.min(...kgs) - 2, max = Math.max(...kgs) + 2;
-  const stepX = (w - pad*2) / Math.max(1, data.length - 1);
-  const scaleY = (kg) => h - pad - ((kg - min) / (max - min)) * (h - pad*2);
-  const points = data.map((d, i) => [pad + i*stepX, scaleY(d.kg)]);
-  const path = points.map((p,i) => (i===0?"M":"L") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ");
-  return (
-    <div className="pr-chart-wrap">
-      <svg viewBox={`0 0 ${w} ${h}`} style={{width:"100%", height:200}}>
-        {[0,1,2,3].map(i => (
-          <line key={i} x1={pad} x2={w-pad} y1={pad + i*(h-pad*2)/3} y2={pad + i*(h-pad*2)/3} stroke="var(--border)" strokeDasharray="3 3" />
-        ))}
-        <path d={path} fill="none" stroke="var(--c-cyan)" strokeWidth="2.5" />
-        {points.map((p,i) => <circle key={i} cx={p[0]} cy={p[1]} r="3.5" fill="var(--c-cyan)" />)}
-        {data.map((d,i) => (
-          <text key={i} x={pad + i*stepX} y={h-8} fontSize="10" fill="var(--text-muted)" textAnchor="middle">{d.date}</text>
-        ))}
-      </svg>
-    </div>
-  );
+  const min = Math.min(...kgs) - 2,
+    max = Math.max(...kgs) + 2;
+  const stepX = (w - pad * 2) / Math.max(1, data.length - 1);
+  const scaleY = kg => h - pad - (kg - min) / (max - min) * (h - pad * 2);
+  const points = data.map((d, i) => [pad + i * stepX, scaleY(d.kg)]);
+  const path = points.map((p, i) => (i === 0 ? "M" : "L") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ");
+  return /*#__PURE__*/React.createElement("div", {
+    className: "pr-chart-wrap"
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: `0 0 ${w} ${h}`,
+    style: {
+      width: "100%",
+      height: 200
+    }
+  }, [0, 1, 2, 3].map(i => /*#__PURE__*/React.createElement("line", {
+    key: i,
+    x1: pad,
+    x2: w - pad,
+    y1: pad + i * (h - pad * 2) / 3,
+    y2: pad + i * (h - pad * 2) / 3,
+    stroke: "var(--border)",
+    strokeDasharray: "3 3"
+  })), /*#__PURE__*/React.createElement("path", {
+    d: path,
+    fill: "none",
+    stroke: "var(--c-cyan)",
+    strokeWidth: "2.5"
+  }), points.map((p, i) => /*#__PURE__*/React.createElement("circle", {
+    key: i,
+    cx: p[0],
+    cy: p[1],
+    r: "3.5",
+    fill: "var(--c-cyan)"
+  })), data.map((d, i) => /*#__PURE__*/React.createElement("text", {
+    key: i,
+    x: pad + i * stepX,
+    y: h - 8,
+    fontSize: "10",
+    fill: "var(--text-muted)",
+    textAnchor: "middle"
+  }, d.date))));
 }
-
 const CSS = `
 .pr-app{--bg:#0a0f1a;--surface:#121a2c;--surface-2:#182238;--border:#223049;--text:#e6edf7;--text-muted:#8291ab;--c-cyan:#38bdf8;--c-amber:#fb923c;--c-teal:#2dd4bf;--c-protein:#60a5fa;--c-carb:#fb923c;--c-fat:#f472b6;--c-green:#34d399;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding:18px;max-width:980px;margin:0 auto;box-sizing:border-box;min-height:100vh;}
 .pr-app *{box-sizing:border-box;}
@@ -550,12 +1013,18 @@ const styleTag = document.createElement("style");
 styleTag.innerHTML = CSS;
 document.head.appendChild(styleTag);
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<PerformanceApp />);
-
+var rootEl = document.getElementById("root");
+try {
+  var appRoot = ReactDOM.createRoot(rootEl);
+  appRoot.render(React.createElement(PerformanceApp));
+} catch (e) {
+  console.error(e);
+  var msg = String(e && e.message || e).replace(/</g, "&lt;");
+  rootEl.innerHTML = "<div style='min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;background:#0a0f1a;color:#e6edf7;font-family:sans-serif;padding:24px;text-align:center;'><div style='font-size:15px;font-weight:700;'>Erro ao iniciar o app</div><div style='font-size:12.5px;color:#8291ab;max-width:320px;'>" + msg + "</div></div>";
+}
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js").catch(() => {});
+  window.addEventListener("load", function() {
+    navigator.serviceWorker.register("service-worker.js").catch(function() {});
   });
 }
 </script>
